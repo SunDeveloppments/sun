@@ -1,15 +1,15 @@
 all: build
 
 build:
-	go build -o sun ./src 
+	cd src && go build -o sun .  && cd .. 
 
 install:
-	sudo cp -f ./sun /usr/local/bin
+	sudo cp -f ./src/sun /usr/local/bin
 
 clean:
-	rm -f ./sun
+	rm -f ./src/sun
 
 run: build
-	./sun
+	./src/sun
 
 	
