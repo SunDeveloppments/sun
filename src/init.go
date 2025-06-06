@@ -7,9 +7,9 @@ import (
 )
 
 func Init(){
-	var arg string = os.Args[1]
+	var arg string = os.Args[2]
 
-	f, err := os.Create(".sunenv.yaml")       
+	f, err := os.Create("./.sunenv.yaml")       
 
 	if err != nil {
 
@@ -19,9 +19,7 @@ func Init(){
 
 	defer f.Close()
 
-	var name string = arg
-
-	var file_content string = fmt.Sprintf("name: %s", name)
+	var file_content string = fmt.Sprintf("name: %s", arg)
 
 	io.WriteString(f, file_content) 
 }
