@@ -9,3 +9,22 @@ The core of the Sun system. Sun is a programming project manger for manage infor
 
 > [!IMPORTANT]
 > Yet on developpment. Some features are no implemented.
+
+When you use `sun init yourapp` , sun create a .sunenv.yaml on your working directory. 
+
+###### *.sunenv.yaml* syntax :  
+
+Example : sun
+
+```yaml  
+name: "sun"  
+autor: "Jellyfish"  
+maintener: "Jellyfish"  
+language: "go"  
+hosting:  
+   platform: "github"  
+   repo: "github.com/SunDeveloppments/sun"   
+```  
+
+> [!NOTE]
+> The reader for .sunenv.yaml is not implemented.
