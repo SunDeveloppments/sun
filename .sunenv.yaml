@@ -1,7 +1,1 @@
-name: "sun"  
-author: "Jellyfish"  
-maintener: "Jellyfish"  
-language: "Golang"  
-hosting:  
-   platform: "github"  
-   repo: "github.com/SunDeveloppments/sun"   
+name: author
