@@ -35,8 +35,8 @@ func main() {
 
 	switch arg {
 
-	case "settings":
-		fmt.Println("This feature is not implemented.")
+	case "read":
+		Read()
 
 	case "init":
 		Init()
