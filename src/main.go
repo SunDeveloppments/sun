@@ -39,7 +39,7 @@ func main() {
 		fmt.Println("This feature is not implemented.")
 
 	case "init":
-		fmt.Println("This feature is not implemented.")
+		Init()
 
 	default:
 
