@@ -22,7 +22,7 @@ Example : sun
 
 ```yaml  
 name: "sun"  
-autor: "Jellyfish"  
+author: "Jellyfish"  
 maintener: "Jellyfish"  
 language: "go"  
 hosting:  
@@ -35,8 +35,8 @@ hosting:
 
 ### 🚀 Roadmap
 
-- [x] init feautre for initialize a .sunenv.yaml on working directory.
-- [ ] Read the .sunenv.yaml file
+- [x] init feature for initialize a .sunenv.yaml on working directory. ( just init name )
+- [x] Read the .sunenv.yaml file ( read name, author and language)
 - [x] Makefile for a better installation
 
 ## 👋 Contributing 
