@@ -10,9 +10,8 @@ func greeting(){
 
 in := `# Sun Development Environment                                                                                                                                                                      
                                                                                                                                                                                                                        
-     Sun is a development projects manager, written in Go. Sun is free and open source.                                                                                                                                
-                                                                                                                                                                                                                       
-     Bye!                                                                                                                                                                                                              
+     Sun is an opensource, free development projects manager, written in Go.                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                  
      `                                                                                                                                                                                                                 
                                                                                                                                                                                                                        
              out, err := glamour.Render(in, "dark")                                                                                                                                                                    
