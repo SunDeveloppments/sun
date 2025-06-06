@@ -10,6 +10,10 @@ The core of the Sun system. Sun is a programming project manger for manage infor
 > [!IMPORTANT]
 > Yet on developpment. Some features are no implemented.
 
+## 🛠️ Functioning
+
+#### Init sun environnment
+
 When you use `sun init yourapp` , sun create a .sunenv.yaml on your working directory. 
 
 ###### *.sunenv.yaml* syntax :  
@@ -28,3 +32,17 @@ hosting:
 
 > [!NOTE]
 > The reader for .sunenv.yaml is not implemented.
+
+### 🚀 Roadmap
+
+- [x] init feautre for initialize a .sunenv.yaml on working directory.
+- [ ] Read the .sunenv.yaml file
+- [x] Makefile for a better installation
+
+## 👋 Contributing 
+
+Welcome, nerds, coders, and others! Ready to contribute? You can fork this repo and open a pull request. We use the [gitmoji](https://gitmoji.dev) code for commits, if you want, you can do use it
+
+## 📜 License
+
+Sun is licensed under the MIT license.
