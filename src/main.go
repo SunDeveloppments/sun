@@ -1,27 +1,10 @@
 package main
 
 import (
-	"fmt"
+//	"fmt"
 	"os"
-	"github.com/charmbracelet/glamour"
+// 	"github.com/charmbracelet/glamour"
 )
-
-func greeting(){
-
-in := `# Sun Development Environment                                                                                                                                                                      
-                                                                                                                                                                                                                       
-     Sun is an opensource, free development projects manager, written in Go.                                                                                                                                
-                                                                                                                                                                                                                                                                                                                                                                  
-     `                                                                                                                                                                                                                 
-                                                                                                                                                                                                                       
-             out, err := glamour.Render(in, "dark")                                                                                                                                                                    
-             if err != nil {                                                                                                                                                                                           
-                 panic(err)                                                                                                                                                                                            
-           }                                                                                                                                                                                                         
-                                                                                                                                                                                                                      
-	          fmt.Print(out)                                                                                                                                                                                            
-              return                                                                                                                                                                                          	
-}
 
 
 func main() {
@@ -43,13 +26,13 @@ func main() {
 
 	default:
 
-		greeting()
+		GreetSun()
 
 }
 
 	} else {
 
-	greeting()
+	GreetSun()
 
 
 	}
