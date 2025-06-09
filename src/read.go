@@ -27,9 +27,11 @@ func Read() {
 	err = yaml.Unmarshal(data, &config)
 	if err != nil {
 		fmt.Println(err)
+	} else {
+
+		fmt.Printf("This app is : %s\n", config.Name)
+		fmt.Printf("Written in : %s\n", config.Language)
+		fmt.Printf("Created by : %s\n", config.Author)
 	}
 
-	fmt.Printf("This app is : %s\n", config.Name)
-	fmt.Printf("Written in : %s\n", config.Language)
-	fmt.Printf("Created by : %s\n", config.Author)
 }

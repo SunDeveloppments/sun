@@ -1,42 +1,55 @@
 package main
 
 import (
-//	"fmt"
 	"os"
-// 	"github.com/charmbracelet/glamour"
+	// "github.com/charmbracelet/glamour"
 )
-
 
 func main() {
 
-	var arg string
+	args := os.Args
 
-	if len(os.Args) > 1 {
+	if len(args) >= 2 {
 
-		arg = os.Args[1]
+		var arg1 string = os.Args[1]
 
+		switch arg1 {
 
-	switch arg {
+		case "read":
+			Read()
 
-	case "read":
-		Read()
+		case "init":
+			Init()
 
-	case "init":
-		Init()
+		default:
 
-	default:
+			GreetSun()
 
-		GreetSun()
+		}
 
-}
+	} else if len(os.Args) == 2 {
+
+		var arg1 string = os.Args[1]
+
+		switch arg1 {
+
+		case "init":
+
+			GreetInit()
+
+		case "read":
+
+			Read()
+
+		default:
+
+			GreetSun()
+		}
 
 	} else {
 
-	GreetSun()
-
+		GreetSun()
 
 	}
-
-
 
 }

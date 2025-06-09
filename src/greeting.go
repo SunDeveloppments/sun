@@ -1,26 +1,29 @@
 package main
 
-import "github.com/charmbracelet/glamour"
-import "fmt"
+import (
+	"fmt"
 
-func GreetSun(){
+	"github.com/charmbracelet/glamour"
+)
+
+func GreetSun() {
 	in := `# Sun Development Environment                                                                                                                                                                      
                                                                                                                                                                                                                        
      Sun is an opensource, free development projects manager, written in Go.                                                                                                                                
                                                                                                                                                                                                                                                                                                                                                                   
-     `                                                                                                                                                                                                                 
-                                                                                                                                                                                                                       
-             out, err := glamour.Render(in, "dark")                                                                                                                                                                    
-             if err != nil {                                                                                                                                                                                           
-                 panic(err)                                                                                                                                                                                            
-           }                                                                                                                                                                                                         
-                                                                                                                                                                                                                      
-	          fmt.Print(out)                                                                                                                                                                                            
-              return        
+     `
+
+	out, err := glamour.Render(in, "dark")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Print(out)
+	return
 }
 
-func GreetInit(){
-		in := `# Sun init
+func GreetInit() {
+	in := `# Sun init
 
 Usage :
 
@@ -29,11 +32,11 @@ Usage :
 - sun init --author : initialize the author of your app
 `
 
-out, err := glamour.Render(in, "dark")
+	out, err := glamour.Render(in, "dark")
 
-if err != nil {
-	fmt.Println(err)
-}
- 
-fmt.Print(out)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Print(out)
 }

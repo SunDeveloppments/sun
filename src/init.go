@@ -1,23 +1,14 @@
 package main
 
 import (
-	"os"
+	"flag"
 	"fmt"
 	"io"
-//    "github.com/charmbracelet/glamour"
+	"os"
 )
 
-var key string
+func WriteYaml(key string, value string) {
 
-func CreateFile() {
-	f, err := os.Create("./.sunenv.yaml")
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer f.Close()
-}
-
-func WriteYaml(key string) {
 	f, err := os.OpenFile("./.sunenv.yaml", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		fmt.Println(err)
@@ -25,40 +16,36 @@ func WriteYaml(key string) {
 	}
 	defer f.Close()
 
-	var arg string = os.Args[3]
-	var file_content string = fmt.Sprintf("%s : %s\n", key, arg)
+	var file_content string = fmt.Sprintf("%s : %s\n", key, value)
+
 	io.WriteString(f, file_content)
 }
 
 func Init() {
 
-	if len(os.Args) > 1 {
+	f_r := os.Remove("./.sunenv.yaml")
 
-var args string = os.Args[2]
+	if f_r != nil {
+		fmt.Println("")
+	}
 
-	switch args {
-	case "--author":
+	if len(os.Args) >= 1 {
 
-		WriteYaml("author")
+		name := flag.String("name", "Sun", "The name of your package")
+		language := flag.String("language", "Go", "The langauge in which is written your software")
+		author := flag.String("author", "Jellyfish", "You ( here me )")
 
-	case "--language":
+		flag.Parse()
 
-		WriteYaml("language")
+		WriteYaml("name", *name)
 
-	case "--name":
+		WriteYaml("language", *language)
 
-		WriteYaml("name")
+		WriteYaml("author", *author)
 
-	default:
+	} else {
+		GreetInit()
 
-	GreetInit()
-
-}
-} else if len(os.Args) == 1 {
-
-	GreetInit()
-
-}
+	}
 
 }
-
