@@ -28,23 +28,55 @@ When you use `sun init yourapp` , sun create a .sunenv.yaml on your working dire
 Example : sun
 
 ```yaml  
-name: "sun"  
-author: "Jellyfish"  
-maintener: "Jellyfish"  
-language: "go"  
-hosting:  
-   platform: "github"  
-   repo: "github.com/SunDeveloppments/sun"   
-```  
+name: "sun"
+author: "Jellyfish"
+author-email: ""
+maintener: "Jellyfish"
+maintener-email: ""
+language: "go"
+hosting:
+   platform: "github"
+   repo: "github.com/SunDeveloppments/sun" 
+```
 
 > [!NOTE]
-> The reader for .sunenv.yaml is not implemented.
+> Now the reader for .sunenv.yaml is implemented !
 
 ### 🚀 Roadmap
 
 - [x] init feature for initialize a .sunenv.yaml on working directory. ( just init name )
 - [x] Read the .sunenv.yaml file ( read name, author and language)
 - [x] Makefile for a better installation
+- [X] Uninstall target in the Makefile if the user wants uninstall the project
+- [X] Questions in init.go if the information flags are not provided
+
+## 💻 Installing
+
+### Install
+Clone the repo:
+```bash
+git clone https://github.com/SunDeveloppments/sun
+cd sun
+```
+Compile or compile and install:
+```bash
+make
+```
+```bash
+sudo make install
+```
+Start !
+```bash
+sun
+```
+```bash
+./sun
+```
+### Uninstall
+```
+sudo make uninstall
+```
+
 
 ## 👋 Contributing 
 
