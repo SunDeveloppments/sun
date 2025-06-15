@@ -6,7 +6,7 @@ build:
 install: install-doc
 	sudo cp -f ./src/sun /usr/local/bin
 
-uninstall:
+uninstall: uninstall-doc
 	sudo rm /usr/local/bin/sun
 
 clean:
@@ -22,3 +22,7 @@ doc: build
 install-doc: doc
 
 	sudo cp ./doc/sun.1 /usr/local/share/man/man1/ 
+
+uninstall-doc:
+
+	sudo rm /usr/local/share/man/man1/sun.1 && sudo rm /usr/local/share/man/man1/sun.1.md
