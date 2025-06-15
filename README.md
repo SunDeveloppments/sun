@@ -10,6 +10,7 @@
     alt="Gitmoji"
   />
 </a>
+![GitHub contributors](https://img.shields.io/github/contributors/SunDeveloppments/sun)
 
 The core of the Sun system. Sun is a programming project manger for manage information ( like language, hosting platform...). 
 
