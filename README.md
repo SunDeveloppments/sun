@@ -72,6 +72,14 @@ sun
 ```bash
 ./sun
 ```
+### Man page
+
+Using :
+
+```sh
+man sun
+```
+
 ### Uninstall
 ```
 sudo make uninstall
