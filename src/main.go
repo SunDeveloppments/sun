@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"fmt"
 	// "github.com/charmbracelet/glamour"
 )
 
@@ -40,6 +41,10 @@ func main() {
 		case "read":
 
 			Read()
+
+		case "help":
+			
+			Help("main")
 
 		default:
 

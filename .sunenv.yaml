@@ -1,0 +1,9 @@
+name: "sun"
+author: "Jellyfish"
+author-email: ""
+maintener: "Jellyfish"
+maintener-email: ""
+language: "go"
+hosting:
+   platform: "github"
+   repo: "github.com/SunDeveloppments/sun"
