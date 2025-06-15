@@ -4,6 +4,12 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/SunDeveloppments/sun/go-tests.yml)
 ![GitHub License](https://img.shields.io/github/license/SunDeveloppments/sun)
 ![GitHub top language](https://img.shields.io/github/languages/top/SunDeveloppments/sun)
+<a href="https://gitmoji.dev">
+  <img
+    src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square"
+    alt="Gitmoji"
+  />
+</a>
 
 The core of the Sun system. Sun is a programming project manger for manage information ( like language, hosting platform...). 
 
