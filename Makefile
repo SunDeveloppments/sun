@@ -25,4 +25,12 @@ install-doc: doc
 
 uninstall-doc:
 
-	sudo rm /usr/local/share/man/man1/sun.1 && sudo rm /usr/local/share/man/man1/sun.1.md
+	sudo rm /usr/local/share/man/man1/sun.1
+
+install-desktop:
+
+	sudo cp sun.desktop /usr/share/applications/
+
+uninstall-desktop:
+
+	sudo rm /usr/share/applications/sun.desktop
