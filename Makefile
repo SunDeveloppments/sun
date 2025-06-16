@@ -1,38 +1,42 @@
+BIN_NAME = sun
+SRC_DIR = src
+MAN_DIR = /usr/local/share/man/man1/
+BIN_DIR = /usr/local/bin/
+ICON_DIR = /usr/share/icons/
+DESKTOP_DIR = /usr/share/applications/
+
+.PHONY: all build install uninstall clean run doc install-doc uninstall-doc install-desktop uninstall-desktop
+
 all: build
 
 build:
-	cd src && go build -o sun .  && cd .. 
+	cd $(SRC_DIR) && go build -o $(BIN_NAME) . && cd ..
 
 install: install-doc
-	sudo cp -f ./src/sun /usr/local/bin
+	sudo cp -f ./${SRC_DIR}/$(BIN_NAME) $(BIN_DIR)
 
 uninstall: uninstall-doc
-	sudo rm /usr/local/bin/sun
+	sudo rm -f $(BIN_DIR)/$(BIN_NAME)
 
 clean:
-	rm -f ./src/sun
+	rm -f ./${SRC_DIR}/$(BIN_NAME)
 
 run: build
-	./src/sun
+	./${SRC_DIR}/$(BIN_NAME)
 
 doc: build
-
-	chmod +x doc/sun.1
+	chmod +x doc/$(BIN_NAME).1
 
 install-doc: doc
-
-	sudo cp ./doc/sun.1 /usr/local/share/man/man1/ 
+	sudo cp ./doc/$(BIN_NAME).1 $(MAN_DIR)
 
 uninstall-doc:
-
-	sudo rm /usr/local/share/man/man1/sun.1
+	sudo rm -f $(MAN_DIR)/$(BIN_NAME).1
 
 install-desktop:
-
-	sudo cp assets/sun.desktop /usr/share/applications/
-	sudo cp assets/sun.png /usr/share/icons/
+	sudo cp assets/$(BIN_NAME).desktop $(DESKTOP_DIR)
+	sudo cp assets/$(BIN_NAME).png $(ICON_DIR)
 
 uninstall-desktop:
-
-	sudo rm /usr/share/applications/sun.desktop
-	sudo rm /usr/share/icons/sun.png
+	sudo rm -f $(DESKTOP_DIR)/$(BIN_NAME).desktop
+	sudo rm -f $(ICON_DIR)/$(BIN_NAME).
