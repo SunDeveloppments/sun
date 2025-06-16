@@ -2,18 +2,35 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+
 	"github.com/charmbracelet/glamour"
 )
 
 func Help(section string) {
+	helpDir := ".sun/assets/help/"
+	homeDir := os.Getenv("HOME")
+	var DirPath string
+	var filePath string
+	DirPath := filepath.Join(homeDir, helpDir)
 	if section == "main" {
-		in := "# Main help \nSun version 0.1 \n### Commands: \n**init** \n- Init helps to initialize or re-initialize .sunenv.yaml config file. \n- Syntax: \n    - sun init [options] \n - See \n  sun init --help\n**read** \n- read reads content of an existing .sunenv.yaml file, and shows it."
-		out, err := glamour.Render(in, "dark")
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Print(out)
+		filePath := filepath.Join(DirPath, "main.md")
+	} else if section == "init" {
+		filePath := filepath.Join(DirPath, "init.md")
+	} else {
+		fmt.Println("Error: unrecognized section.")
+		os.Exit(127)
+	}
+	content, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		fmt.Printf("Error reading file %s: %v\n", filePath, err)
 		return
 	}
+	out, err := glamour.Render(string(content), "dark")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Print(out)
 }
