@@ -16,9 +16,9 @@ func Help(section string) {
 	var filePath string
 	DirPath = filepath.Join(homeDir, helpDir)
 	if section == "main" {
-		filePath := filepath.Join(DirPath, "main.md")
+		filePath = filepath.Join(DirPath, "main.md")
 	} else if section == "init" {
-		filePath := filepath.Join(DirPath, "init.md")
+		filePath = filepath.Join(DirPath, "init.md")
 	} else {
 		fmt.Println("Error: unrecognized section.")
 		os.Exit(127)
