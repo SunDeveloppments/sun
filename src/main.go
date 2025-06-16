@@ -1,59 +1,48 @@
 package main
 
 import (
+	"github.com/spf13/cobra"
 	"os"
-	// "github.com/charmbracelet/glamour"
 )
 
-func main() {
-
-	args := os.Args
-
-	if len(args) >= 2 {
-
-		var arg1 string = os.Args[1]
-
-		switch arg1 {
-
-		case "read":
-			Read()
-
-		case "init":
-			Init()
-
-		default:
-
-			GreetSun()
-
-		}
-
-	} else if len(os.Args) == 2 {
-
-		var arg1 string = os.Args[1]
-
-		switch arg1 {
-
-		case "init":
-
-			GreetInit()
-
-		case "read":
-
-			Read()
-
-		case "help":
-			
-			Help("main")
-
-		default:
-
-			GreetSun()
-		}
-
-	} else {
-
+var rootCmd = &cobra.Command{
+	Use:   "app",
+	Short: "Sun : a project information management system.",
+	Long:  "Sun : a project information management system, built for coders. It manages langage, authors, mainteners, hosting and name of any project.",
+	Run: func(cmd *cobra.Command, args []string) {
 		GreetSun()
+	},
+}
 
+var readCmd = &cobra.Command{
+	Use:   "read",
+	Short: "Read .sunenv.yaml file.",
+	Run: func(cmd *cobra.Command, args []string) {
+		Read()
+	},
+}
+
+var initCmd = &cobra.Command{
+	Use:   "init",
+	Short: "Initialize .sunenv.yaml.",
+	Run: func(cmd *cobra.Command, args []string) {
+		Init()
+	},
+}
+
+var helpCmd = &cobra.Command{
+	Use:   "help",
+	Short: "Show help.",
+	Run: func(cmd *cobra.Command, args []string) {
+		Help("main")
+	},
+}
+
+func main() {
+	rootCmd.AddCommand(readCmd)
+	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(helpCmd)
+	if err := rootCmd.Execute(); err != nil {
+		os.Exit(1)
 	}
-
 }
