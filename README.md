@@ -52,6 +52,22 @@ hosting:
 
 ## 💻 Installing
 
+### Dependencies  
+For build Sun, you need
+
+- 🐧 A linux computer  
+- 🐹 Golang   
+```bash  
+sudo dnf install go # for Fedora, RHEL…
+sudo apt update && sudo apt install go # For Ubuntu, Debian…  
+sudo zypper install go # For OpenSUSE and SUSE  
+sudo pacman -S go or sudo yay -S go # For ArchLinux…  
+doas apk add go # For Alpine Linux  
+```  
+- 🏗️ Make
+- 📚 Pandoc ( optionnal, doc feature )
+
+
 ### Install
 Clone the repo:
 ```bash
