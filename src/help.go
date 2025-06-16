@@ -14,7 +14,7 @@ func Help(section string) {
 	homeDir := os.Getenv("HOME")
 	var DirPath string
 	var filePath string
-	DirPath := filepath.Join(homeDir, helpDir)
+	DirPath = filepath.Join(homeDir, helpDir)
 	if section == "main" {
 		filePath := filepath.Join(DirPath, "main.md")
 	} else if section == "init" {
