@@ -63,6 +63,7 @@ func Init() {
 		log.Println("Warning: File .sunenv.yaml already exists.")
 	}
 
+	helpflag := flag.Bool("help", false, "Show help")
 	yesFlag := flag.Bool("y", false, "Confirm action without ask questions")
 	name := flag.String("name", "default", "The name of your package")
 	language := flag.String("language", "default", "The language in which your software is written")
@@ -73,6 +74,10 @@ func Init() {
 
 	flag.Parse()
 
+	if *helpflag {
+		Help("init")
+	}
+	
 	if !*yesFlag {
 		if *name == "default" {
 			*name = Input("package name: ")
