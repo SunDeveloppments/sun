@@ -29,8 +29,10 @@ uninstall-doc:
 
 install-desktop:
 
-	sudo cp sun.desktop /usr/share/applications/
+	sudo cp assets/sun.desktop /usr/share/applications/
+	sudo cp assets/sun.png /usr/share/icons/
 
 uninstall-desktop:
 
 	sudo rm /usr/share/applications/sun.desktop
+	sudo rm /usr/share/icons/sun.png
