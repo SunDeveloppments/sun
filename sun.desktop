@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=sun
+Comment=Sun is a programming project manager written in Go
+Encoding=UTF-8
+Exec=sun --help
+Icon=sun.png
+StartupNotify=false
+Terminal=true
+Type=Application
+Categories=prog, dev, utils
