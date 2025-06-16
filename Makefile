@@ -7,7 +7,14 @@ DESKTOP_DIR = /usr/share/applications/
 
 .PHONY: all build install uninstall clean run doc install-doc uninstall-doc install-desktop uninstall-desktop
 
-all: build
+all: script build
+
+script:
+	if command -v go >/dev/null 2>&1; then
+    	    go get -u github.com/spf13/cobra@latest
+	else
+	    echo "Cannot found any go installation."
+	fi
 
 build:
 	cd $(SRC_DIR) && go build -o $(BIN_NAME) . && cd ..
