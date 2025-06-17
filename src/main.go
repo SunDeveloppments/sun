@@ -26,8 +26,6 @@ var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize .sunenv.yaml.",
 	Run: func(cmd *cobra.Command, args []string) {
-		Detect()
-		Frameworks()
 		Init()
 	},
 }
@@ -40,10 +38,20 @@ var helpCmd = &cobra.Command{
 	},
 }
 
+var detectCmd = &cobra.Command{
+	Use: "detect",
+	Short: "Detect frameworks and langages.",
+	Run: func(cmd *cobra.Command, args []string) {
+		Detect()
+		Frameworks()
+	},
+}
+
 func main() {
 	rootCmd.AddCommand(readCmd)
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(helpCmd)
+	rootCmd.AddCommand(detectCmd)
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}

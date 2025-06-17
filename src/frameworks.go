@@ -12,7 +12,7 @@ type Framework struct {
 	Filename string
 }
 
-func checkDirectoryframes(dir string, filenames []string, detected *[]string) error {
+func checkDirectoryframes(dir string, frameworks []Framework, detected *[]string) error {
 	files, err := os.ReadDir(dir)
 	if err != nil {
 		return err
@@ -20,13 +20,13 @@ func checkDirectoryframes(dir string, filenames []string, detected *[]string) er
 
 	for _, file := range files {
 		if file.IsDir() {
-			if err := checkDirectoryframes(filepath.Join(dir, file.Name()), filenames, detected); err != nil {
+			if err := checkDirectoryframes(filepath.Join(dir, file.Name()), frameworks, detected); err != nil {
 				return err
 			}
 		} else {
-			for _, filename := range filenames {
-				if strings.EqualFold(file.Name(), filename) {
-					*detected = append(*detected, filename)
+			for _, framework := range frameworks {
+				if strings.EqualFold(file.Name(), framework.Filename) {
+					*detected = append(*detected, framework.Name)
 				}
 			}
 		}
@@ -49,15 +49,13 @@ func DetectFrameworks() ([]string, error) {
 		{"ASP.NET", ".csproj"},
 		{"Angular", "angular.json"},
 		{"jQuery", "jquery.min.js"},
+		{"Make", "Makefile"},
+		{"Just", "justfile"},
 	}
 
 	var detected []string
-	filenames := make([]string, len(frameworks))
-	for i, framework := range frameworks {
-		filenames[i] = framework.Filename
-	}
 
-	if err := checkDirectoryframes(".", filenames, &detected); err != nil {
+	if err := checkDirectoryframes(".", frameworks, &detected); err != nil {
 		return nil, fmt.Errorf("error reading directory: %w", err)
 	}
 
