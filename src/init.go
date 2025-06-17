@@ -48,7 +48,11 @@ func WriteYaml(key string, value string) {
 	data[key] = value
 	var newContent strings.Builder
 	for k, v := range data {
-		newContent.WriteString(fmt.Sprintf("%s: %s\n", k, v))
+		if k == "platform" || k == "repo" {
+			newContent.WriteString(fmt.Sprintf("  %s: %s\n", k, v))
+		} else {
+			newContent.WriteString(fmt.Sprintf("%s: %s\n", k, v))
+		}
 	}
 	err = ioutil.WriteFile(path, []byte(newContent.String()), 0644)
 	if err != nil {
@@ -65,12 +69,15 @@ func Init() {
 
 	helpflag := flag.Bool("help", false, "Show help")
 	yesFlag := flag.Bool("y", false, "Confirm action without ask questions")
+	nohostingFlag := flag.Bool("no-hosting", false, "If the project has no hosting platform.")
 	name := flag.String("name", "default", "The name of your package")
 	language := flag.String("language", "default", "The language in which your software is written")
 	author := flag.String("author", "default", "Your name")
 	author_email := flag.String("author-email", "default", "Email of author")
 	maintener := flag.String("maintener", "default", "Maintener of the repo")
 	maintener_email := flag.String("maintener-email", "default", "Email of maintener")
+	platform := flag.String("platform", "default", "Hosting platform")
+	repo := flag.String("repo", "default", "Repository URL")
 
 	flag.Parse()
 
@@ -83,19 +90,27 @@ func Init() {
 			*name = Input("package name: ")
 		}
 		if *language == "default" {
-			*language = Input("Programming langage: ")
+			*language = Input("Programming language: ")
 		}
 		if *author == "default" {
 			*author = Input("Author name: ")
 		}
 		if *author_email == "default" {
-			*author = Input("Author email: ")
+			*author_email = Input("Author email: ")
 		}
 		if *maintener == "default" {
-			*author = Input("Maintener name: ")
+			*maintener = Input("Maintener name: ")
 		}
-		if* maintener_email == "default" {
+		if *maintener_email == "default" {
 			*maintener_email = Input("Maintener email: ")
+		}
+		if *no_hosting {
+			if *platform == "default" {
+				*platform = Input("Hosting platform: ")
+			}
+			if *repo == "default" {
+				*repo = Input("Repository URL: ")
+			}
 		}
 	}
 
@@ -105,4 +120,6 @@ func Init() {
 	WriteYaml("author-email", *author_email)
 	WriteYaml("maintener", *maintener)
 	WriteYaml("maintener-email", *maintener_email)
+	WriteYaml("platform", *platform)
+	WriteYaml("repo", *repo)
 }
