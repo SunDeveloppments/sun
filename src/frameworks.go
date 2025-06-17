@@ -2,17 +2,28 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
-type Framework struct {
-	Name     string
-	Filename string
+type Language struct {
+	Name       string
+	Extension  string
+	LineCount  int
 }
 
-func checkDirectory(dir string, frameworks []Framework, detected *[]string) error {
+func CountLines(filePath string) (int, error) {
+	content, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return 0, err
+	}
+	lines := strings.Split(string(content), "\n")
+	return len(lines), nil
+}
+
+func checkDirectory(dir string, languages []Language, languageMap map[string]*Language) error {
 	files, err := os.ReadDir(dir)
 	if err != nil {
 		return err
@@ -20,13 +31,20 @@ func checkDirectory(dir string, frameworks []Framework, detected *[]string) erro
 
 	for _, file := range files {
 		if file.IsDir() {
-			if err := checkDirectory(filepath.Join(dir, file.Name()), frameworks, detected); err != nil {
+			if err := checkDirectory(filepath.Join(dir, file.Name()), languages, languageMap); err != nil {
 				return err
 			}
 		} else {
-			for _, framework := range frameworks {
-				if strings.EqualFold(file.Name(), framework.Filename) {
-					*detected = append(*detected, framework.Name)
+			for _, lang := range languages {
+				if strings.HasSuffix(file.Name(), lang.Extension) {
+					lineCount, err := CountLines(filepath.Join(dir, file.Name()))
+					if err != nil {
+						return err
+					}
+					if _, exists := languageMap[lang.Name]; !exists {
+						languageMap[lang.Name] = &Language{Name: lang.Name, Extension: lang.Extension, LineCount: 0}
+					}
+					languageMap[lang.Name].LineCount += lineCount
 				}
 			}
 		}
@@ -34,45 +52,57 @@ func checkDirectory(dir string, frameworks []Framework, detected *[]string) erro
 	return nil
 }
 
-func DetectFrameworks() ([]string, error) {
-	frameworks := []Framework{
-		{"Node.js", "package.json"},
-		{"Go", "go.mod"},
-		{"Python", "requirements.txt"},
-		{"Ruby on Rails", "Gemfile"},
-		{"PHP", "composer.json"},
-		{"Java", "pom.xml"},
-		{"Rust with Cargo", "Cargo.toml"},
-		{"Vue.js", "app.vue"},
-		{"Bootstrap", "bootstrap.min.css"},
-		{"Flutter", "pubspec.yaml"},
-		{"ASP.NET", ".csproj"},
-		{"Angular", "angular.json"},
-		{"jQuery", "jquery.min.js"},
+func DetectLanguages() (map[string]*Language, error) {
+	languages := []Language{
+		{"Go", ".go", 0},
+		{"Python", ".py", 0},
+		{"JavaScript", ".js", 0},
+		{"Java", ".java", 0},
+		{"Ruby", ".rb", 0},
+		{"PHP", ".php", 0},
+		{"C", ".c", 0},
+		{"C++", ".cpp", 0},
+		{"HTML", ".html", 0},
+		{"CSS", ".css", 0},
 	}
 
-	var detected []string
-	if err := checkDirectory(".", frameworks, &detected); err != nil {
+	languageMap := make(map[string]*Language)
+	if err := checkDirectory(".", languages, languageMap); err != nil {
 		return nil, fmt.Errorf("error reading directory: %w", err)
 	}
 
-	return detected, nil
+	return languageMap, nil
 }
 
-func Frameworks() {
-	frameworks, err := DetectFrameworks()
+func CalculatePercentages(languageMap map[string]*Language) map[string]float64 {
+	totalLines := 0
+	for _, lang := range languageMap {
+		totalLines += lang.LineCount
+	}
+
+	percentages := make(map[string]float64)
+	for _, lang := range languageMap {
+		if totalLines > 0 {
+			percentages[lang.Name] = (float64(lang.LineCount) / float64(totalLines)) * 100
+		} else {
+			percentages[lang.Name] = 0
+		}
+	}
+
+	return percentages
+}
+
+func Detect() {
+	languageMap, err := DetectLanguages()
 	if err != nil {
-		fmt.Println("Error detecting frameworks:", err)
+		fmt.Println("Error detecting languages:", err)
 		return
 	}
 
-	if len(frameworks) > 0 {
-		fmt.Println("Detected frameworks:")
-		for _, framework := range frameworks {
-			fmt.Println("-", framework)
-		}
-	} else {
-		fmt.Println("No frameworks detecte
-			    d.")
+	percentages := CalculatePercentages(languageMap)
+
+	fmt.Println("Language usage percentages:")
+	for lang, percent := range percentages {
+		fmt.Printf("%s: %.2f%%\n", lang, percent)
 	}
 }
