@@ -91,7 +91,7 @@ func CalculatePercentages(languageMap map[string]*Language) map[string]float64 {
 	return percentages
 }
 
-func main() {
+func Detect() {
 	languageMap, err := DetectLanguages()
 	if err != nil {
 		fmt.Println("Error detecting languages:", err)
