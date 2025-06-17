@@ -58,7 +58,7 @@ func DetectFrameworks() ([]string, error) {
 	return detected, nil
 }
 
-func main() {
+func Frameworks() {
 	frameworks, err := DetectFrameworks()
 	if err != nil {
 		fmt.Println("Error detecting frameworks:", err)
