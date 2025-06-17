@@ -75,14 +75,6 @@ var initCmd = &cobra.Command{
 	},
 }
 
-var helpCmd = &cobra.Command{
-	Use:   "help",
-	Short: "Show help.",
-	Run: func(cmd *cobra.Command, args []string) {
-		Help("main")
-	},
-}
-
 var detectCmd = &cobra.Command{
 	Use:   "stats",
 	Short: "Detect frameworks and langages.",
@@ -101,7 +93,6 @@ var detectCmd = &cobra.Command{
 func main() {
 	rootCmd.AddCommand(readCmd)
 	rootCmd.AddCommand(initCmd)
-	rootCmd.AddCommand(helpCmd)
 	rootCmd.AddCommand(detectCmd)
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)

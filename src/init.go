@@ -79,12 +79,7 @@ func Init(configtype ConfigType, helpflag bool, y, nohosting bool) {
         	}
 		}
 	}
-
-	if helpflag {
-		Help("init")
-		os.Exit(0)
-	}
-
+	
 	if !y {
 		if configtype.Name == "default" {
 			configtype.Name = Input("package name: ")
