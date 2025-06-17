@@ -20,7 +20,7 @@ func checkDirectoryframes(dir string, filenames []string, detected *[]string) er
 
 	for _, file := range files {
 		if file.IsDir() {
-			if err := checkDirectory(filepath.Join(dir, file.Name()), filenames, detected); err != nil {
+			if err := checkDirectoryframes(filepath.Join(dir, file.Name()), filenames, detected); err != nil {
 				return err
 			}
 		} else {
