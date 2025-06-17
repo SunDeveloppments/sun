@@ -23,7 +23,7 @@ func CountLines(filePath string) (int, error) {
 	return len(lines), nil
 }
 
-func checkDirectory(dir string, languages []Language, languageMap map[string]*Language) error {
+func checkDirectory(dir string, extensions []string, detected map[string]int) error {
 	files, err := os.ReadDir(dir)
 	if err != nil {
 		return err
@@ -31,20 +31,20 @@ func checkDirectory(dir string, languages []Language, languageMap map[string]*La
 
 	for _, file := range files {
 		if file.IsDir() {
-			if err := checkDirectory(filepath.Join(dir, file.Name()), languages, languageMap); err != nil {
+			if err := checkDirectory(filepath.Join(dir, file.Name()), extensions, detected); err != nil {
 				return err
 			}
 		} else {
-			for _, lang := range languages {
-				if strings.HasSuffix(file.Name(), lang.Extension) {
+			for _, ext := range extensions {
+				if strings.HasSuffix(file.Name(), ext) || strings.EqualFold(file.Name(), ext) {
+					if _, exists := detected[ext]; !exists {
+						detected[ext] = 0
+					}
 					lineCount, err := CountLines(filepath.Join(dir, file.Name()))
 					if err != nil {
 						return err
 					}
-					if _, exists := languageMap[lang.Name]; !exists {
-						languageMap[lang.Name] = &Language{Name: lang.Name, Extension: lang.Extension, LineCount: 0}
-					}
-					languageMap[lang.Name].LineCount += lineCount
+					detected[ext] += lineCount
 				}
 			}
 		}
@@ -52,7 +52,7 @@ func checkDirectory(dir string, languages []Language, languageMap map[string]*La
 	return nil
 }
 
-func DetectLanguages() (map[string]*Language, error) {
+func DetectLanguages() (map[string]int, error) {
 	languages := []Language{
 		{"Go", ".go", 0},
 		{"Python", ".py", 0},
@@ -66,26 +66,35 @@ func DetectLanguages() (map[string]*Language, error) {
 		{"CSS", ".css", 0},
 	}
 
-	languageMap := make(map[string]*Language)
-	if err := checkDirectory(".", languages, languageMap); err != nil {
+	detected := make(map[string]int)
+	for _, lang := range languages {
+		detected[lang.Name] = 0
+	}
+
+	extensions := make([]string, len(languages))
+	for i, lang := range languages {
+		extensions[i] = lang.Extension
+	}
+
+	if err := checkDirectory(".", extensions, detected); err != nil {
 		return nil, fmt.Errorf("error reading directory: %w", err)
 	}
 
-	return languageMap, nil
+	return detected, nil
 }
 
-func CalculatePercentages(languageMap map[string]*Language) map[string]float64 {
+func CalculatePercentages(detected map[string]int) map[string]float64 {
 	totalLines := 0
-	for _, lang := range languageMap {
-		totalLines += lang.LineCount
+	for _, count := range detected {
+		totalLines += count
 	}
 
 	percentages := make(map[string]float64)
-	for _, lang := range languageMap {
+	for lang, count := range detected {
 		if totalLines > 0 {
-			percentages[lang.Name] = (float64(lang.LineCount) / float64(totalLines)) * 100
+			percentages[lang] = (float64(count) / float64(totalLines)) * 100
 		} else {
-			percentages[lang.Name] = 0
+			percentages[lang] = 0
 		}
 	}
 
@@ -93,13 +102,13 @@ func CalculatePercentages(languageMap map[string]*Language) map[string]float64 {
 }
 
 func Detect() {
-	languageMap, err := DetectLanguages()
+	detected, err := DetectLanguages()
 	if err != nil {
 		fmt.Println("Error detecting languages:", err)
 		return
 	}
 
-	percentages := CalculatePercentages(languageMap)
+	percentages := CalculatePercentages(detected)
 
 	fmt.Println("Language usage percentages:")
 	for lang, percent := range percentages {
