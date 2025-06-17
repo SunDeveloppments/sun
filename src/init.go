@@ -79,7 +79,7 @@ func Init(configtype ConfigType, helpflag bool, y, nohosting bool) {
         	}
 		}
 	}
-	
+
 	if !y {
 		if configtype.Name == "default" {
 			configtype.Name = Input("package name: ")
@@ -109,7 +109,7 @@ func Init(configtype ConfigType, helpflag bool, y, nohosting bool) {
 		}
 	} else {
 		configtype.Name = filepath.Dir(".")
-		cmd := exec.Command("./sun", "detect", "--json")
+		cmd := exec.Command("./sun", "stats", "--json")
 		output, err := cmd.Output()
 		if err != nil {
 			fmt.Println("Error executing command:", err)
