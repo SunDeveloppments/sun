@@ -104,7 +104,7 @@ func Init() {
 		if *maintener_email == "default" {
 			*maintener_email = Input("Maintener email: ")
 		}
-		if *no_hosting {
+		if *nohostingFlag {
 			if *platform == "default" {
 				*platform = Input("Hosting platform: ")
 			}
