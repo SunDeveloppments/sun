@@ -4,6 +4,9 @@ MAN_DIR = /usr/local/share/man/man1/
 BIN_DIR = /usr/local/bin/
 ICON_DIR = /usr/share/icons/
 DESKTOP_DIR = /usr/share/applications/
+DETECT_CMD = detect
+INIT_CMD = init --name="Sun" --language="Go" --author="Jellyfish & NotBitly" --author-email="sun.developpments@proton.me" --maintener="Jellyfish & NotBitly" --maintener-email="sun.developpments@proton.me" --platform="Github" --repo="https://github.com/SunDeveloppments/sun"
+INIT_Y = init --y
 
 .PHONY: all build install uninstall clean run doc install-doc uninstall-doc install-desktop uninstall-desktop
 
@@ -31,6 +34,10 @@ uninstall: uninstall-doc
 
 clean:
 	@rm -f ./${SRC_DIR}/$(BIN_NAME)
+
+test: build
+	@./$(BIN_NAME) $(INIT_Y)
+	@./$(BIN_NAME) $(DETECT_CMD)
 
 run: build
 	@./$(BIN_NAME)

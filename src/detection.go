@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -36,7 +37,6 @@ func checkDirectory(dir string, extensions []string, detected map[string]int, la
 			}
 		} else {
 			filePath := filepath.Join(dir, file.Name())
-			// Check for files without extension (like Makefile)
 			if file.Name() == "Makefile" {
 				lineCount, err := CountLines(filePath)
 				if err != nil {
@@ -45,7 +45,6 @@ func checkDirectory(dir string, extensions []string, detected map[string]int, la
 				detected["Makefile"] += lineCount
 			}
 
-			// Check for extensions
 			for _, lang := range languages {
 				if strings.HasSuffix(file.Name(), lang.Extension) || strings.EqualFold(file.Name(), lang.Extension) {
 					if _, exists := detected[lang.Name]; !exists {
@@ -55,7 +54,7 @@ func checkDirectory(dir string, extensions []string, detected map[string]int, la
 					if err != nil {
 						return err
 					}
-					detected[lang.Name] += lineCount // Utiliser le nom du langage ici
+					detected[lang.Name] += lineCount
 				}
 			}
 		}
@@ -114,7 +113,7 @@ func CalculatePercentages(detected map[string]int) map[string]float64 {
 	return percentages
 }
 
-func Detect() {
+func Detect(jsonOutput bool) {
 	detected, err := DetectLanguages()
 	if err != nil {
 		fmt.Println("Error detecting languages:", err)
@@ -122,10 +121,20 @@ func Detect() {
 	}
 
 	percentages := CalculatePercentages(detected)
-	fmt.Println("Language usage percentages:")
-	for lang, percent := range percentages {
-		if percent > 0 {
-			fmt.Printf("%s: %.2f%%\n", lang, percent)
+
+	if jsonOutput {
+		output, err := json.MarshalIndent(percentages, "", "  ")
+		if err != nil {
+			fmt.Println("Error marshaling to JSON:", err)
+			return
+		}
+		fmt.Println(string(output))
+	} else {
+		fmt.Println("Language usage percentages:")
+		for lang, percent := range percentages {
+			if percent > 0 {
+				fmt.Printf("%s: %.2f%%\n", lang, percent)
+			}
 		}
 	}
 }

@@ -2,13 +2,26 @@ package main
 
 import (
 	"errors"
-	"flag"
 	"fmt"
 	"os"
 	"log"
 	"io/ioutil"
 	"strings"
+	"path/filepath"
+	"encoding/json"
+	"os/exec"
 )
+
+type ConfigType struct {
+	Name            string
+	Language        string
+	Author          string
+	AuthorEmail     string
+	Maintener       string
+	MaintenerEmail  string
+	Platform        string
+	Repo            string
+}
 
 func exists(path string) bool {
 	_, err := os.Stat(path)
@@ -24,102 +37,112 @@ func CreateFile() {
 	defer fc.Close()
 }
 
-func WriteYaml(key string, value string) {
+func WriteYaml(configtype ConfigType) {
 	path := "./.sunenv.yaml"
-	content, err := ioutil.ReadFile(path)
+	_, err := ioutil.ReadFile(path)
 	if err != nil {
 		if os.IsNotExist(err) {
-			content = []byte{}
+			CreateFile()
 		} else {
 			fmt.Println("Error reading file:", err)
 			return
 		}
 	}
-	lines := strings.Split(string(content), "\n")
-	data := make(map[string]string)
-	for _, line := range lines {
-		if line != "" {
-			parts := strings.SplitN(line, ": ", 2)
-			if len(parts) == 2 {
-				data[parts[0]] = parts[1]
-			}
-		}
-	}
-	data[key] = value
+
 	var newContent strings.Builder
-	for k, v := range data {
-		if k == "platform" || k == "repo" {
-			newContent.WriteString(fmt.Sprintf("  %s: %s\n", k, v))
-		} else {
-			newContent.WriteString(fmt.Sprintf("%s: %s\n", k, v))
-		}
-	}
+	newContent.WriteString(fmt.Sprintf("name: %s\n", configtype.Name))
+	newContent.WriteString(fmt.Sprintf("maintener-email: %s\n", configtype.MaintenerEmail))
+	newContent.WriteString(fmt.Sprintf("language: %s\n", configtype.Language))
+	newContent.WriteString(fmt.Sprintf("author: %s\n", configtype.Author))
+	newContent.WriteString(fmt.Sprintf("author-email: %s\n", configtype.AuthorEmail))
+	newContent.WriteString(fmt.Sprintf("maintener: %s\n", configtype.Maintener))
+	newContent.WriteString("hosting:\n")
+	newContent.WriteString(fmt.Sprintf("  platform: \"%s\"\n", configtype.Platform))
+	newContent.WriteString(fmt.Sprintf("  repo: %s\n", configtype.Repo))
+
 	err = ioutil.WriteFile(path, []byte(newContent.String()), 0644)
 	if err != nil {
 		fmt.Println("Error writing to file:", err)
 	}
 }
 
-func Init() {
+func Init(configtype ConfigType, helpflag bool, y, nohosting bool) {
 	path := "./.sunenv.yaml"
 
-	if exists(path) {
-		log.Println("Warning: File .sunenv.yaml already exists.")
+    if exists(path) {
+        log.Println("Warning: File .sunenv.yaml already exists.")
+		if !y {
+			response := Input("Overwrite existing file [y/N]? ")
+        	if response != "yes" && response != "y" {
+            	log.Println("Cancelled.")
+    	        os.Exit(0)
+        	}
+		}
 	}
 
-	helpflag := flag.Bool("help", false, "Show help")
-	yesFlag := flag.Bool("y", false, "Confirm action without ask questions")
-	nohostingFlag := flag.Bool("no-hosting", false, "If the project has no hosting platform.")
-	name := flag.String("name", "default", "The name of your package")
-	language := flag.String("language", "default", "The language in which your software is written")
-	author := flag.String("author", "default", "Your name")
-	author_email := flag.String("author-email", "default", "Email of author")
-	maintener := flag.String("maintener", "default", "Maintener of the repo")
-	maintener_email := flag.String("maintener-email", "default", "Email of maintener")
-	platform := flag.String("platform", "default", "Hosting platform")
-	repo := flag.String("repo", "default", "Repository URL")
-
-	flag.Parse()
-
-	if *helpflag {
+	if helpflag {
 		Help("init")
+		os.Exit(0)
+	}
+
+	if !y {
+		if configtype.Name == "default" {
+			configtype.Name = Input("package name: ")
+		}
+		if configtype.Language == "default" {
+			configtype.Language = Input("Programming language: ")
+		}
+		if configtype.Author == "default" {
+			configtype.Author = Input("Author name: ")
+		}
+		if configtype.AuthorEmail == "default" {
+			configtype.AuthorEmail = Input("Author email: ")
+		}
+		if configtype.Maintener == "default" {
+			configtype.Maintener = Input("Maintener name: ")
+		}
+		if configtype.MaintenerEmail == "default" {
+			configtype.MaintenerEmail = Input("Maintener email: ")
+		}
+		if nohosting {
+			if configtype.Platform == "default" {
+				configtype.Platform = Input("Hosting platform: ")
+			}
+			if configtype.Repo == "default" {
+				configtype.Repo = Input("Repository URL: ")
+			}
+		}
+	} else {
+		configtype.Name = filepath.Dir(".")
+		cmd := exec.Command("./sun", "detect", "--json")
+		output, err := cmd.Output()
+		if err != nil {
+			fmt.Println("Error executing command:", err)
+			return
+		}
+		var percentages map[string]float64
+		if err := json.Unmarshal(output, &percentages); err != nil {
+			fmt.Println("Error unmarshaling JSON:", err)
+			return
+		}
+		var maxLang string
+		var maxPercent float64
+		for lang, percent := range percentages {
+			if percent > maxPercent {
+				maxPercent = percent
+				maxLang = lang
+			}
+		}
+		configtype.Language = maxLang
+		configtype.Author = "John Doe"
+		configtype.AuthorEmail = ""
+		configtype.Maintener = "John Doe"
+		configtype.MaintenerEmail = ""
+		if nohosting {
+			configtype.Platform = "Github"
+			configtype.Repo = ""
+		}
 	}
 	
-	if !*yesFlag {
-		if *name == "default" {
-			*name = Input("package name: ")
-		}
-		if *language == "default" {
-			*language = Input("Programming language: ")
-		}
-		if *author == "default" {
-			*author = Input("Author name: ")
-		}
-		if *author_email == "default" {
-			*author_email = Input("Author email: ")
-		}
-		if *maintener == "default" {
-			*maintener = Input("Maintener name: ")
-		}
-		if *maintener_email == "default" {
-			*maintener_email = Input("Maintener email: ")
-		}
-		if *nohostingFlag {
-			if *platform == "default" {
-				*platform = Input("Hosting platform: ")
-			}
-			if *repo == "default" {
-				*repo = Input("Repository URL: ")
-			}
-		}
-	}
-
-	WriteYaml("name", *name)
-	WriteYaml("language", *language)
-	WriteYaml("author", *author)
-	WriteYaml("author-email", *author_email)
-	WriteYaml("maintener", *maintener)
-	WriteYaml("maintener-email", *maintener_email)
-	WriteYaml("platform", *platform)
-	WriteYaml("repo", *repo)
+	WriteYaml(configtype)
 }

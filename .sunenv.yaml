@@ -1,6 +1,9 @@
-name: Sun
-maintener-email: sun.developpments@proton.me
-language: Golang
-author: Jellyfish & NotBitly
-author-email: sun.developpments@proton.me
-maintener: Jellyfish & NotBitly
+name: .
+maintener-email: 
+language: Go
+author: John Doe
+author-email: 
+maintener: John Doe
+hosting:
+  platform: "default"
+  repo: default
