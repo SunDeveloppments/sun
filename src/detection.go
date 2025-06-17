@@ -130,7 +130,7 @@ func Detect(jsonOutput bool) {
 		}
 		fmt.Println(string(output))
 	} else {
-		fmt.Println("Language usage percentages:")
+		Cprint("Language usage percentages:", green)
 		for lang, percent := range percentages {
 			if percent > 0 {
 				fmt.Printf("%s: %.2f%%\n", lang, percent)

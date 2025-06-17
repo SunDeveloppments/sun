@@ -70,7 +70,7 @@ func Frameworks() {
 	}
 
 	if len(frameworks) > 0 {
-		fmt.Println("Detected frameworks:")
+		Cprint("Detected frameworks:", green)
 		for _, framework := range frameworks {
 			fmt.Println("-", framework)
 		}
