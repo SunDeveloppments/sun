@@ -10,15 +10,22 @@ INIT_Y = init --y
 
 .PHONY: all build install uninstall clean run doc install-doc uninstall-doc install-desktop uninstall-desktop
 
-all: build cobra_install
+all: script build cobra_install
 
 cobra_install:
 	cd ./src && go get github.com/spf13/cobra && cd ..
 
+script:
+	@if command -v go >/dev/null 2>&1; then \
+		cd src && go get -u github.com/spf13/cobra@latest; \
+	else \
+		echo "Cannot find any go installation."; \
+	fi
+
 build:
 	@cd $(SRC_DIR) && go build -o ../$(BIN_NAME) . && cd ..
 
-install: install-doc install-desktop install-assets
+install: install-doc
 	@sudo cp -f ./${SRC_DIR}/$(BIN_NAME) $(BIN_DIR)
 
 uninstall: uninstall-doc
