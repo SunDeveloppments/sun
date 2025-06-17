@@ -23,6 +23,35 @@ func CountLines(filePath string) (int, error) {
 	return len(lines), nil
 }
 
+func checkDirectory(dir string, languages []Language, languageMap map[string]*Language) error {
+	files, err := os.ReadDir(dir)
+	if err != nil {
+		return err
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			if err := checkDirectory(filepath.Join(dir, file.Name()), languages, languageMap); err != nil {
+				return err
+			}
+		} else {
+			for _, lang := range languages {
+				if strings.HasSuffix(file.Name(), lang.Extension) {
+					lineCount, err := CountLines(filepath.Join(dir, file.Name()))
+					if err != nil {
+						return err
+					}
+					if _, exists := languageMap[lang.Name]; !exists {
+						languageMap[lang.Name] = &Language{Name: lang.Name, Extension: lang.Extension, LineCount: 0}
+					}
+					languageMap[lang.Name].LineCount += lineCount
+				}
+			}
+		}
+	}
+	return nil
+}
+
 func DetectLanguages() (map[string]*Language, error) {
 	languages := []Language{
 		{"Go", ".go", 0},
@@ -38,36 +67,7 @@ func DetectLanguages() (map[string]*Language, error) {
 	}
 
 	languageMap := make(map[string]*Language)
-	checkDirectory := func(dir string) error {
-		files, err := os.ReadDir(dir)
-		if err != nil {
-			return err
-		}
-
-		for _, file := range files {
-			if file.IsDir() {
-				if err := checkDirectory(filepath.Join(dir, file.Name())); err != nil {
-					return err
-				}
-			} else {
-				for _, lang := range languages {
-					if strings.HasSuffix(file.Name(), lang.Extension) {
-						lineCount, err := CountLines(filepath.Join(dir, file.Name()))
-						if err != nil {
-							return err
-						}
-						if _, exists := languageMap[lang.Name]; !exists {
-							languageMap[lang.Name] = &Language{Name: lang.Name, Extension: lang.Extension, LineCount: 0}
-						}
-						languageMap[lang.Name].LineCount += lineCount
-					}
-				}
-			}
-		}
-		return nil
-	}
-
-	if err := checkDirectory("."); err != nil {
+	if err := checkDirectory(".", languages, languageMap); err != nil {
 		return nil, fmt.Errorf("error reading directory: %w", err)
 	}
 
