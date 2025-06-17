@@ -3,8 +3,9 @@ package main
 ////////////// IMPORTS //////////////////
 
 import (
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 //////// FLAGS DEFINITION SECTION ////////
@@ -30,7 +31,7 @@ func init() {
 	initCmd.Flags().StringVar(&maintener, "maintener", "default", "Maintener of the repo")
 	initCmd.Flags().StringVar(&maintenerEmail, "maintener-email", "default", "Email of maintener")
 	initCmd.Flags().StringVar(&platform, "platform", "default", "Hosting platform")
-	initCmd.Flags().StringVar(&repo, "repo", "default", "Repository URL")	
+	initCmd.Flags().StringVar(&repo, "repo", "default", "Repository URL")
 	initCmd.Flags().BoolVar(&help, "help", false, "Show help")
 	initCmd.Flags().BoolVar(&y, "y", false, "Confirm action without ask questions")
 	initCmd.Flags().BoolVar(&nohosting, "no-hosting", false, "If the project has no hosting platform.")
@@ -57,21 +58,21 @@ var readCmd = &cobra.Command{
 }
 
 var initCmd = &cobra.Command{
-    Use:   "init",
-    Short: "Initialize .sunenv.yaml.",
-    Run: func(cmd *cobra.Command, args []string) {
-        config := ConfigType{
-            Name:            name,
-            Language:        language,
-            Author:          author,
-            AuthorEmail:     authorEmail,
-            Maintener:      maintener,
-            MaintenerEmail: maintenerEmail,
-            Platform:        platform,
-            Repo:            repo,
-        }
-        Init(config, help, y, nohosting)
-    },
+	Use:   "init",
+	Short: "Initialize .sunenv.yaml.",
+	Run: func(cmd *cobra.Command, args []string) {
+		config := ConfigType{
+			Name:           name,
+			Language:       language,
+			Author:         author,
+			AuthorEmail:    authorEmail,
+			Maintener:      maintener,
+			MaintenerEmail: maintenerEmail,
+			Platform:       platform,
+			Repo:           repo,
+		}
+		Init(config, help, y, nohosting)
+	},
 }
 
 var helpCmd = &cobra.Command{
@@ -83,7 +84,7 @@ var helpCmd = &cobra.Command{
 }
 
 var detectCmd = &cobra.Command{
-	Use: "detect",
+	Use:   "stats",
 	Short: "Detect frameworks and langages.",
 	Run: func(cmd *cobra.Command, args []string) {
 		if jsonoutput {

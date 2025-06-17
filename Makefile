@@ -25,8 +25,8 @@ script:
 build:
 	@cd $(SRC_DIR) && go build -o ../$(BIN_NAME) . && cd ..
 
-install: install-doc
-	@sudo cp -f ./${SRC_DIR}/$(BIN_NAME) $(BIN_DIR)
+install: install-doc install-desktop install-assets
+	@sudo cp -f ./$(BIN_NAME) $(BIN_DIR)
 
 uninstall: uninstall-doc
 	@sudo rm -f $(BIN_DIR)/$(BIN_NAME)
