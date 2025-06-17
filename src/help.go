@@ -10,7 +10,7 @@ import (
 )
 
 func Help(section string) {
-	helpDir := ".sun/assets/help/"
+	helpDir := ".config/sun/assets/help/"
 	homeDir := os.Getenv("HOME")
 	var DirPath string
 	var filePath string

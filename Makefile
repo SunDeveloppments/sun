@@ -15,18 +15,10 @@ all: build cobra_install
 cobra_install:
 	cd ./src && go get github.com/spf13/cobra && cd ..
 
-
-script:
-	@if command -v go >/dev/null 2>&1; then \
-		go get -u github.com/spf13/cobra@latest; \
-	else \
-		echo "Cannot found any go installation."; \
-	fi
-
 build:
 	@cd $(SRC_DIR) && go build -o ../$(BIN_NAME) . && cd ..
 
-install: install-doc
+install: install-doc install-desktop install-assets
 	@sudo cp -f ./${SRC_DIR}/$(BIN_NAME) $(BIN_DIR)
 
 uninstall: uninstall-doc
@@ -58,3 +50,11 @@ install-desktop:
 uninstall-desktop:
 	@sudo rm -f $(DESKTOP_DIR)/$(BIN_NAME).desktop
 	@sudo rm -f $(ICON_DIR)/$(BIN_NAME).png
+
+install-assets:
+	@mkdir -p ~/.config/sun/
+	@echo "Copying files…"
+	@cp -rf ./assets/  ~/.config/sun/
+
+uninstall-assets:
+	@rm -rf ~/.config/sun/assets
