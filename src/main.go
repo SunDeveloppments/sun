@@ -26,6 +26,8 @@ var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize .sunenv.yaml.",
 	Run: func(cmd *cobra.Command, args []string) {
+		Detect()
+		Frameworks()
 		Init()
 	},
 }
