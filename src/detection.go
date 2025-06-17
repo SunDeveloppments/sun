@@ -25,16 +25,16 @@ func CountLines(filePath string) (int, error) {
 
 func DetectLanguages() (map[string]*Language, error) {
 	languages := []Language{
-		{"Go", ".go"},
-		{"Python", ".py"},
-		{"JavaScript", ".js"},
-		{"Java", ".java"},
-		{"Ruby", ".rb"},
-		{"PHP", ".php"},
-		{"C", ".c"},
-		{"C++", ".cpp"},
-		{"HTML", ".html"},
-		{"CSS", ".css"},
+		{"Go", ".go", 0},
+		{"Python", ".py", 0},
+		{"JavaScript", ".js", 0},
+		{"Java", ".java", 0},
+		{"Ruby", ".rb", 0},
+		{"PHP", ".php", 0},
+		{"C", ".c", 0},
+		{"C++", ".cpp", 0},
+		{"HTML", ".html", 0},
+		{"CSS", ".css", 0},
 	}
 
 	languageMap := make(map[string]*Language)
@@ -57,7 +57,7 @@ func DetectLanguages() (map[string]*Language, error) {
 							return err
 						}
 						if _, exists := languageMap[lang.Name]; !exists {
-							languageMap[lang.Name] = &Language{Name: lang.Name, Extension: lang.Extension}
+							languageMap[lang.Name] = &Language{Name: lang.Name, Extension: lang.Extension, LineCount: 0}
 						}
 						languageMap[lang.Name].LineCount += lineCount
 					}
@@ -73,6 +73,7 @@ func DetectLanguages() (map[string]*Language, error) {
 
 	return languageMap, nil
 }
+
 func CalculatePercentages(languageMap map[string]*Language) map[string]float64 {
 	totalLines := 0
 	for _, lang := range languageMap {
