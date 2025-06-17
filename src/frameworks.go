@@ -12,6 +12,28 @@ type Framework struct {
 	Filename string
 }
 
+func checkDirectory(dir string, frameworks []Framework, detected *[]string) error {
+	files, err := os.ReadDir(dir)
+	if err != nil {
+		return err
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			if err := checkDirectory(filepath.Join(dir, file.Name()), frameworks, detected); err != nil {
+				return err
+			}
+		} else {
+			for _, framework := range frameworks {
+				if strings.EqualFold(file.Name(), framework.Filename) {
+					*detected = append(*detected, framework.Name)
+				}
+			}
+		}
+	}
+	return nil
+}
+
 func DetectFrameworks() ([]string, error) {
 	frameworks := []Framework{
 		{"Node.js", "package.json"},
@@ -20,38 +42,17 @@ func DetectFrameworks() ([]string, error) {
 		{"Ruby on Rails", "Gemfile"},
 		{"PHP", "composer.json"},
 		{"Java", "pom.xml"},
-    		{"Rust with Cargo", "Cargo.toml"},
-    		{"Vue.js", "app.vue"},
-    		{"Bootstrap", "bootstrap.min.css"},
-    		{"Flutter", "pubspec.yaml"},
-    		{"ASP.NET", ".csproj"},
-    		{"Angular", "angular.json"},
-    		{"jQuery", "jquery.min.js"},
+		{"Rust with Cargo", "Cargo.toml"},
+		{"Vue.js", "app.vue"},
+		{"Bootstrap", "bootstrap.min.css"},
+		{"Flutter", "pubspec.yaml"},
+		{"ASP.NET", ".csproj"},
+		{"Angular", "angular.json"},
+		{"jQuery", "jquery.min.js"},
 	}
 
 	var detected []string
-	checkDirectory := func(dir string) error {
-		files, err := os.ReadDir(dir)
-		if err != nil {
-			return err
-		}
-
-		for _, file := range files {
-			if file.IsDir() {
-				if err := checkDirectory(filepath.Join(dir, file.Name())); err != nil {
-					return err
-				}
-			} else {
-				for _, framework := range frameworks {
-					if strings.EqualFold(file.Name(), framework.Filename) {
-						detected = append(detected, framework.Name)
-					}
-				}
-			}
-		}
-		return nil
-	}
-	if err := checkDirectory("."); err != nil {
+	if err := checkDirectory(".", frameworks, &detected); err != nil {
 		return nil, fmt.Errorf("error reading directory: %w", err)
 	}
 
@@ -71,6 +72,7 @@ func Frameworks() {
 			fmt.Println("-", framework)
 		}
 	} else {
-		fmt.Println("No frameworks detected.")
+		fmt.Println("No frameworks detecte
+			    d.")
 	}
 }
