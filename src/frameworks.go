@@ -12,7 +12,7 @@ type Framework struct {
 	Filename string
 }
 
-func checkDirectory(dir string, frameworks []Framework, detected *[]string) error {
+func checkDirectoryframes(dir string, filenames []string, detected *[]string) error {
 	files, err := os.ReadDir(dir)
 	if err != nil {
 		return err
@@ -20,13 +20,13 @@ func checkDirectory(dir string, frameworks []Framework, detected *[]string) erro
 
 	for _, file := range files {
 		if file.IsDir() {
-			if err := checkDirectory(filepath.Join(dir, file.Name()), frameworks, detected); err != nil {
+			if err := checkDirectory(filepath.Join(dir, file.Name()), filenames, detected); err != nil {
 				return err
 			}
 		} else {
-			for _, framework := range frameworks {
-				if strings.EqualFold(file.Name(), framework.Filename) {
-					*detected = append(*detected, framework.Name)
+			for _, filename := range filenames {
+				if strings.EqualFold(file.Name(), filename) {
+					*detected = append(*detected, filename)
 				}
 			}
 		}
@@ -52,7 +52,12 @@ func DetectFrameworks() ([]string, error) {
 	}
 
 	var detected []string
-	if err := checkDirectory(".", frameworks, &detected); err != nil {
+	filenames := make([]string, len(frameworks))
+	for i, framework := range frameworks {
+		filenames[i] = framework.Filename
+	}
+
+	if err := checkDirectoryframes(".", filenames, &detected); err != nil {
 		return nil, fmt.Errorf("error reading directory: %w", err)
 	}
 
