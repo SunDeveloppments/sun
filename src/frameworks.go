@@ -20,13 +20,13 @@ func DetectFrameworks() ([]string, error) {
 		{"Ruby on Rails", "Gemfile"},
 		{"PHP", "composer.json"},
 		{"Java", "pom.xml"},
-    {"Rust with Cargo", "Cargo.toml"},
-    {"Vue.js", "app.vue"},
-    {"Bootstrap", "bootstrap.min.css"},
-    {"Flutter", "pubspec.yaml"},
-    {"ASP.NET", ".csproj"},
-    {"Angular", "angular.json"},
-    {"jQuery", "jquery.min.js"},
+    		{"Rust with Cargo", "Cargo.toml"},
+    		{"Vue.js", "app.vue"},
+    		{"Bootstrap", "bootstrap.min.css"},
+    		{"Flutter", "pubspec.yaml"},
+    		{"ASP.NET", ".csproj"},
+    		{"Angular", "angular.json"},
+    		{"jQuery", "jquery.min.js"},
 	}
 
 	var detected []string
@@ -71,7 +71,6 @@ func main() {
 			fmt.Println("-", framework)
 		}
 	} else {
-		fmt.Println("No frameworks detect
-                ed.")
+		fmt.Println("No frameworks detected.")
 	}
 }
