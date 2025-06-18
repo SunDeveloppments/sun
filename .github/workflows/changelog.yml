@@ -17,7 +17,7 @@ jobs:
         with:
           commit_message: "📝 Update CHANGELOG"
           format: markdown
-          preset: node
+          preset: conventional
           group_similar_commits: false
           add_author: false
           author_email: 114694492+gitmoji-changelog-bot@users.noreply.github.com
