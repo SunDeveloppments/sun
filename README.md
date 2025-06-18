@@ -44,11 +44,26 @@ hosting:
 
 ### 🚀 Roadmap
 
+#### Done
+
 - [x] init feature for initialize a .sunenv.yaml on working directory. ( just init name )
 - [x] Read the .sunenv.yaml file ( read name, author and language)
 - [x] Makefile for a better installation
 - [X] Uninstall target in the Makefile if the user wants uninstall the project
 - [X] Questions in init.go if the information flags are not provided
+- [X] A function to do purcentages of langages from the current repertory!
+- [X] Another function to detect used frameworks.
+- [X] Automatic use of these stats to init .sunenv.yaml.
+
+#### To do
+
+- [ ] Automatically read config files of frameworks.
+- [ ] Use these informations.
+- [ ] Real-time monitoring.
+- [ ] Auto-initialize frameworks.
+- [ ] Detect librairies.
+- [ ] Git integration.
+- [ ] Automatic git pull / git push / git fetch
 
 ## 💻 Installing
 
