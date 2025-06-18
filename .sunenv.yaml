@@ -1,9 +1,9 @@
-name: .
+name: sun
 maintener-email: 
 language: Go
-author: John Doe
+author: Jellyfish & 0l-bitly
 author-email: 
-maintener: John Doe
+maintener: Jellyfish & 0l-bitly
 hosting:
-  platform: "default"
-  repo: default
+  platform: Github
+  repo: https://github.com/SunDeveloppments/sun

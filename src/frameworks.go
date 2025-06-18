@@ -70,8 +70,6 @@ func DetectFrameworks() ([]string, error) {
 		{"Haskell with Stack", "stack.yaml"},
 		{"Clojure with Leiningen", "project.clj"},
 		{"OpenCV", "CMakeLists.txt"},
-		{"TensorFlow", "requirements.txt"},
-		{"Pandas", "requirements.txt"},
 		{"Apache Cordova", "config.xml"},
 		{"Electron", "main.js"},
 		{"Quasar", "quasar.config.js"},
@@ -79,6 +77,7 @@ func DetectFrameworks() ([]string, error) {
 		{"Jekyll", "_config.yml"},
 		{"Hugo", "config.toml"},
 		{"Zig with Build.zig", "build.zig"},
+		{"Ninja", "build.ninja"},
 	}
 
 	var detected []string

@@ -108,7 +108,12 @@ func Init(configtype ConfigType, helpflag bool, y, nohosting bool) {
 			}
 		}
 	} else {
-		configtype.Name = filepath.Dir(".")
+		wd,err := os.Getwd()
+		if err != nil {
+		    panic(err)
+		}
+		parent := filepath.Base(wd)
+		configtype.Name = parent
 		cmd := exec.Command("./sun", "stats", "--json")
 		output, err := cmd.Output()
 		if err != nil {
