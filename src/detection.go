@@ -114,6 +114,9 @@ func DetectLanguages() (map[string]int, error) {
 		{"VHDL", ".vhd", 0},
 		{"Verilog", ".v", 0},
 		{"Hare", ".ha", 0},
+		{"Bash", ".bash", 0},
+		{"Fish", ".fish", 0},
+		{"Shell", ".sh", 0},
 	}
 
 	detected := make(map[string]int)
