@@ -21,7 +21,8 @@ var repo string
 var help bool
 var y bool
 var nohosting bool
-var jsonoutput bool
+var statsjsonoutput bool
+var readjsonoutput bool
 
 func init() {
 	initCmd.Flags().StringVar(&name, "name", "default", "The name of your package")
@@ -35,7 +36,8 @@ func init() {
 	initCmd.Flags().BoolVar(&help, "help", false, "Show help")
 	initCmd.Flags().BoolVar(&y, "y", false, "Confirm action without ask questions")
 	initCmd.Flags().BoolVar(&nohosting, "no-hosting", false, "If the project has no hosting platform.")
-	detectCmd.Flags().BoolVar(&jsonoutput, "json", false, "Format output in JSON")
+	statsCmd.Flags().BoolVar(&statsjsonoutput, "json", false, "Format output in JSON")
+	readCmd.Flags().BoolVar(&readjsonoutput, "json", false, "Format ouput in JSON")
 }
 
 //////////// COMMANDS VARS //////////////
@@ -53,7 +55,11 @@ var readCmd = &cobra.Command{
 	Use:   "read",
 	Short: "Read .sunenv.yaml file.",
 	Run: func(cmd *cobra.Command, args []string) {
-		Read()
+		if !readjsonoutput {
+			Read(false)
+		} else {
+			Read(true)
+		}
 	},
 }
 
@@ -75,11 +81,11 @@ var initCmd = &cobra.Command{
 	},
 }
 
-var detectCmd = &cobra.Command{
+var statsCmd = &cobra.Command{
 	Use:   "stats",
 	Short: "Detect frameworks and langages.",
 	Run: func(cmd *cobra.Command, args []string) {
-		if jsonoutput {
+		if statsjsonoutput {
 			Detect(true)
 		} else {
 			Detect(false)
@@ -93,7 +99,7 @@ var detectCmd = &cobra.Command{
 func main() {
 	rootCmd.AddCommand(readCmd)
 	rootCmd.AddCommand(initCmd)
-	rootCmd.AddCommand(detectCmd)
+	rootCmd.AddCommand(statsCmd)
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}

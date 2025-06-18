@@ -121,7 +121,7 @@ func DetectLanguages() (map[string]int, error) {
 		{"Typst", ".typ", 0},
 		{"Batch file", ".bat", 0},
 		{"Haskell", ".hs", 0},
-		{"OCaml", ".ml", 0}
+		{"OCaml", ".ml", 0},
 	}
 
 	detected := make(map[string]int)
