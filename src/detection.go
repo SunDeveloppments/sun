@@ -116,7 +116,12 @@ func DetectLanguages() (map[string]int, error) {
 		{"Hare", ".ha", 0},
 		{"Bash", ".bash", 0},
 		{"Fish", ".fish", 0},
-		{"Shell", ".sh", 0},
+		{"Cmake", ".cmake", 0},
+		{"LaTEX", ".tex", 0},
+		{"Typst", ".typ", 0},
+		{"Batch file", ".bat", 0},
+		{"Haskell", ".hs", 0},
+		{"OCaml", ".ml", 0}
 	}
 
 	detected := make(map[string]int)
