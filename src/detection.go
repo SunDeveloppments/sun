@@ -113,8 +113,8 @@ func DetectLanguages() (map[string]int, error) {
 		{"XSLT", ".xsl", 0},
 		{"VHDL", ".vhd", 0},
 		{"Verilog", ".v", 0},
+		{"Hare", ".ha", 0},
 	}
-	
 
 	detected := make(map[string]int)
 	for _, lang := range languages {
