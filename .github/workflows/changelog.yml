@@ -1,0 +1,20 @@
+            - name: Generate Gitmoji Changelog
+  # You may pin to the exact commit or the version.
+  # uses: sercanuste/gitmoji-changelog-action@58bf04c15907a6242cc668d1c68f3cc5a3e83051
+  uses: sercanuste/gitmoji-changelog-action@v1.0.0
+  with:
+    # The commit message to use when updating the changelog. Default: 📝 Update CHANGELOG
+    commit_message: # optional, default is 📝 Update CHANGELOG
+    # Changelog file format (markdown, json). Default: markdown
+    format: # optional, default is markdown
+    # Preset for gitmoji-changelog. (node, generic, maven, cargo, helm) Default: node (More info: https://docs.gitmoji-changelog.dev/#/?id=%e2%9a%99%ef%b8%8f-presets)
+    preset: # optional, default is node
+    # [⚗️,- beta] Try to group similar commits. Default: false
+    group_similar_commits: # optional
+    # Add the author in changelog lines. Default: false
+    add_author: # optional
+    # Email address of commit author
+    author_email: # optional, default is 114694492+gitmoji-changelog-bot@users.noreply.github.com
+    # Name of commit author
+    author_name: # optional, default is Gitmoji Changelog Bot
+          
