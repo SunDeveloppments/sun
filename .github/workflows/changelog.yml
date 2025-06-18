@@ -1,4 +1,4 @@
-            - name: Generate Gitmoji Changelog
+- name: Generate Gitmoji Changelog
   # You may pin to the exact commit or the version.
   # uses: sercanuste/gitmoji-changelog-action@58bf04c15907a6242cc668d1c68f3cc5a3e83051
   uses: sercanuste/gitmoji-changelog-action@v1.0.0
