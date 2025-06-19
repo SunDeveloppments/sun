@@ -13,16 +13,16 @@
 </a>
 ![GitHub contributors](https://img.shields.io/github/contributors/SunDeveloppments/sun)
 
-The core of the Sun system. Sun is a programming project manger for manage information ( like language, hosting platform...). 
+The core of the Sun system. Sun is a project information manager ( like language, hosting platform...). 
 
 > [!IMPORTANT]
-> Yet on developpment. Some features are no implemented.
+> Still on developpment. Some features are no implemented.
 
 ## 🛠️ Functioning
 
 #### Init sun environnment
 
-When you use `sun init yourapp` , sun create a .sunenv.yaml on your working directory. 
+When you use `sun init ` , sun create a .sunenv.yaml in your working directory. 
 
 ###### *.sunenv.yaml* syntax :  
 
@@ -47,7 +47,7 @@ hosting:
 
 #### Done
 
-- [x] init feature for initialize a .sunenv.yaml on working directory. ( just init name )
+- [x] init feature for initialize a .sunenv.yaml in working directory. ( just init name )
 - [x] Read the .sunenv.yaml file ( read name, author and language)
 - [x] Makefile for a better installation
 - [X] Uninstall target in the Makefile if the user wants uninstall the project

@@ -1,26 +1,26 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
-	"os"
-	"log"
 	"io/ioutil"
-	"strings"
-	"path/filepath"
-	"encoding/json"
+	"log"
+	"os"
 	"os/exec"
+	"path/filepath"
+	"strings"
 )
 
 type ConfigType struct {
-	Name            string
-	Language        string
-	Author          string
-	AuthorEmail     string
-	Maintener       string
-	MaintenerEmail  string
-	Platform        string
-	Repo            string
+	Name           string
+	Language       string
+	Author         string
+	AuthorEmail    string
+	Maintener      string
+	MaintenerEmail string
+	Platform       string
+	Repo           string
 }
 
 func exists(path string) bool {
@@ -69,14 +69,14 @@ func WriteYaml(configtype ConfigType) {
 func Init(configtype ConfigType, helpflag bool, y, nohosting bool) {
 	path := "./.sunenv.yaml"
 
-    if exists(path) {
-        log.Println("Warning: File .sunenv.yaml already exists.")
+	if exists(path) {
+		log.Println("Warning: File .sunenv.yaml already exists.")
 		if !y {
 			response := Input("Overwrite existing file [y/N]? ")
-        	if response != "yes" && response != "y" {
-            	log.Println("Cancelled.")
-    	        os.Exit(0)
-        	}
+			if response != "yes" && response != "y" {
+				log.Println("Cancelled.")
+				os.Exit(0)
+			}
 		}
 	}
 
@@ -108,9 +108,9 @@ func Init(configtype ConfigType, helpflag bool, y, nohosting bool) {
 			}
 		}
 	} else {
-		wd,err := os.Getwd()
+		wd, err := os.Getwd()
 		if err != nil {
-		    panic(err)
+			panic(err)
 		}
 		parent := filepath.Base(wd)
 		configtype.Name = parent
@@ -143,6 +143,6 @@ func Init(configtype ConfigType, helpflag bool, y, nohosting bool) {
 			configtype.Repo = ""
 		}
 	}
-	
+
 	WriteYaml(configtype)
 }
