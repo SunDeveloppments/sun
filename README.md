@@ -1,5 +1,7 @@
  <h1 style="text-align: center">☀️ Sun</h1> 
 
+[![asciicast](https://asciinema.org/a/HBGsAfWTUqRkX80oEzVZqZrpo.svg)](https://asciinema.org/a/HBGsAfWTUqRkX80oEzVZqZrpo)
+
 ![GitHub last commit](https://img.shields.io/github/last-commit/SunDeveloppments/sun)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/SunDeveloppments/sun/go-tests.yml)
 ![GitHub License](https://img.shields.io/github/license/SunDeveloppments/sun)
