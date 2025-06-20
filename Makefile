@@ -37,6 +37,12 @@ test: build
 	@./$(BIN_NAME) $(INIT_Y)
 	@./$(BIN_NAME) $(DETECT_CMD)
 
+test-help: build
+	@./$(BIN_NAME) help init
+	@./$(BIN_NAME) help read
+	@./$(BIN_NAME) help stats
+	@./$(BIN_NAME) help completion
+
 run: build
 	@./$(BIN_NAME)
 

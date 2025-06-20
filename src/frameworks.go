@@ -12,7 +12,7 @@ type Framework struct {
 	Filename string
 }
 
-func checkDirectoryframes(dir string, frameworks []Framework, detected *[]string) error {
+func checkDirectoryframes(dir string, frameworks []Framework, detected map[string]int) error {
 	files, err := os.ReadDir(dir)
 	if err != nil {
 		return err
@@ -26,7 +26,7 @@ func checkDirectoryframes(dir string, frameworks []Framework, detected *[]string
 		} else {
 			for _, framework := range frameworks {
 				if strings.EqualFold(file.Name(), framework.Filename) {
-					*detected = append(*detected, framework.Name)
+					detected[framework.Name]++
 				}
 			}
 		}
@@ -34,7 +34,7 @@ func checkDirectoryframes(dir string, frameworks []Framework, detected *[]string
 	return nil
 }
 
-func DetectFrameworks() ([]string, error) {
+func DetectFrameworks() (map[string]int, error) {
 	frameworks := []Framework{
 		{"Node.js", "package.json"},
 		{"Go", "go.mod"},
@@ -80,9 +80,9 @@ func DetectFrameworks() ([]string, error) {
 		{"Ninja", "build.ninja"},
 	}
 
-	var detected []string
+	detected := make(map[string]int)
 
-	if err := checkDirectoryframes(".", frameworks, &detected); err != nil {
+	if err := checkDirectoryframes(".", frameworks, detected); err != nil {
 		return nil, fmt.Errorf("error reading directory: %w", err)
 	}
 
@@ -97,9 +97,13 @@ func Frameworks() {
 	}
 
 	if len(frameworks) > 0 {
-		Cprint("Detected frameworks:", green)
-		for _, framework := range frameworks {
-			fmt.Println("-", framework)
+		fmt.Println("Detected frameworks:")
+		for framework, count := range frameworks {
+			if count > 1 {
+				fmt.Printf("- %s (%d)\n", framework, count)
+			} else {
+				fmt.Println("-", framework)
+			}
 		}
 	} else {
 		fmt.Println("No frameworks detected.")
