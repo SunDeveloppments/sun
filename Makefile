@@ -9,23 +9,16 @@ INIT_Y =  init --y
 
 .PHONY: all build install uninstall clean run doc install-doc uninstall-doc install-desktop uninstall-desktop
 
-all: script build cobra_install
-
-cobra_install:
-	cd ./src && go get github.com/spf13/cobra && cd ..
-
-script:
-	@if command -v go >/dev/null 2>&1; then \
-		cd src && go get -u github.com/spf13/cobra@latest; \
-	else \
-		echo "Cannot find any go installation."; \
-	fi
+all: build 
 
 build:
-	@cd $(SRC_DIR) && go build -o ../$(BIN_NAME) . && cd ..
-
+	@echo "Build…"
+	@go build .
+	@echo "Done."
 install: install-doc install-desktop install-assets
-	@sudo cp -f ./$(BIN_NAME) $(BIN_DIR)
+	@echo "Copying…"
+	@sudo cp ./$(BIN_NAME) $(BIN_DIR)
+	@echo "Done."
 
 uninstall: uninstall-doc
 	@sudo rm -f $(BIN_DIR)/$(BIN_NAME)
@@ -46,7 +39,7 @@ test-help: build
 run: build
 	@./$(BIN_NAME)
 
-doc: build
+doc:
 	@chmod +x doc/$(BIN_NAME).1
 
 install-doc: doc
@@ -65,7 +58,6 @@ uninstall-desktop:
 
 install-assets:
 	@mkdir -p ~/.config/sun/
-	@echo "Copying files…"
 	@cp -rf ./assets/  ~/.config/sun/
 
 uninstall-assets:
