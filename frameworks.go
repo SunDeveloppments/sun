@@ -97,7 +97,7 @@ func Frameworks() {
 	}
 
 	if len(frameworks) > 0 {
-		fmt.Println("Detected frameworks:")
+		Cprint("Detected frameworks:", green)
 		for framework, count := range frameworks {
 			if count > 1 {
 				fmt.Printf("- %s (%d)\n", framework, count)
