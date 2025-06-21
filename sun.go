@@ -6,8 +6,8 @@ import (
 	"context"
 	"os"
 
-	"github.com/spf13/cobra"
 	"github.com/charmbracelet/fang"
+	"github.com/spf13/cobra"
 )
 
 //////// FLAGS DEFINITION SECTION ////////
@@ -99,10 +99,10 @@ var statsCmd = &cobra.Command{
 //////////////// MAIN //////////////////
 
 func main() {
-    rootCmd.AddCommand(readCmd)
-    rootCmd.AddCommand(initCmd)
-    rootCmd.AddCommand(statsCmd)
-    if err := fang.Execute(context.TODO(), rootCmd); err != nil {
+	rootCmd.AddCommand(readCmd)
+	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(statsCmd)
+	if err := fang.Execute(context.TODO(), rootCmd); err != nil {
 		os.Exit(1)
 	}
 }

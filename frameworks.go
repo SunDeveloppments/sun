@@ -37,7 +37,7 @@ func checkDirectoryframes(dir string, frameworks []Framework, detected map[strin
 func DetectFrameworks() (map[string]int, error) {
 	frameworks := []Framework{
 		{"Node.js", "package.json"},
-		{"Go", "go.mod"},
+		{"Go Module", "go.mod"},
 		{"Python", "requirements.txt"},
 		{"Ruby on Rails", "Gemfile"},
 		{"PHP", "composer.json"},
