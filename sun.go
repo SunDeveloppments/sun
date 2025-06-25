@@ -122,6 +122,7 @@ func main() {
 	rootCmd.AddCommand(readCmd)
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(statsCmd)
+	initCmd.AddCommand(frameworkInitCmd)
 	if err := fang.Execute(context.TODO(), rootCmd); err != nil {
 		os.Exit(1)
 	}
