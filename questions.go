@@ -9,14 +9,7 @@ import (
     "github.com/charmbracelet/huh"
 )
 
-var (
-    LocalInstall   bool
-    SysInstall     bool
-    PortableInstall bool
-    Version        = "dev (version unknown)"
-)
-
-type Config struct {
+type YamlFileConfig struct {
     Lang string `yaml:"lang"`
     Frm  string `yaml:"frm"`
     Init struct {
@@ -27,14 +20,14 @@ type Config struct {
     } `yaml:"rm"`
 }
 
-func readConfig(filename string) (Config, error) {
+func readYamlFileConfig(filename string) (YamlFileConfig, error) {
     data, err := ioutil.ReadFile(filename)
     if err != nil {
-        return Config{}, err
+        return YamlFileConfig{}, err
     }
-    var config Config
+    var config YamlFileConfig
     if err := yaml.Unmarshal(data, &config); err != nil {
-        return Config{}, err
+        return YamlFileConfig{}, err
     }
     return config, nil
 }
@@ -101,7 +94,7 @@ func Ask() {
         }
 
         configFile := fmt.Sprintf("%s.yaml", strings.ToLower(selectedFramework))
-        config, err := readConfig(configFile)
+        config, err := readYamlFileConfig(configFile)
 
         if err != nil {
             fmt.Println("Error reading config file:", err)

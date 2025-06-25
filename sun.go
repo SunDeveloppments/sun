@@ -100,7 +100,7 @@ var frameworkInitCmd = &cobra.Command{
 	Short: "Initialize frameworks config files.",
 	Run: func(cmd *cobra.Command, args []string) {
 		Ask()
-	}
+	},
 }
 
 var statsCmd = &cobra.Command{
