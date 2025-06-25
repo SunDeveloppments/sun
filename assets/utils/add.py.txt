@@ -1,0 +1,23 @@
+import yaml
+
+def create_yaml_file(filename):
+    config = {
+        'lang': input("Enter the programming language: "),
+        'frm': input("Enter the framework: "),
+        'init': {
+            'script': input("Enter the initialization script: ")
+        },
+        'rm': {
+            'script': input("Enter the removal script: ")
+        }
+    }
+
+    with open(filename, 'w') as yaml_file:
+        yaml.dump(config, yaml_file, default_flow_style=False)
+
+    print(f"YAML file '{filename}' created successfully.")
+
+if __name__ == "__main__":
+    framework_name = input("Enter the framework name (in lowercase): ")
+    filename = f"{framework_name}.yaml"
+    create_yaml_file(filename)
