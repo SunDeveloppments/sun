@@ -1,0 +1,6 @@
+lang: Go
+frm: Gin
+init:
+  script: /path/to/init/script.sh
+rm:
+  script: /config/sun/assets/scripts/qt.sh
