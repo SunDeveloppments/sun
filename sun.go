@@ -10,6 +10,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+///////// PACKAGE BUILD INFO ////////////
+
+var (
+    LocalInstall   string
+    SysInstall     string
+    PortableInstall string
+	Version = "dev (version unknown)"
+)
+
 //////// FLAGS DEFINITION SECTION ////////
 
 var name string
@@ -44,15 +53,18 @@ func init() {
 
 //////////// COMMANDS VARS //////////////
 
+// ROOT //
 var rootCmd = &cobra.Command{
 	Use:   "sun",
 	Short: "Sun : a project information management system.",
 	Long:  "Sun : a project information management system, built for coders. It manages langage, authors, mainteners, hosting and name of any project.",
+	Version: Version,
 	Run: func(cmd *cobra.Command, args []string) {
 		GreetSun()
 	},
 }
 
+// OTHERS //
 var readCmd = &cobra.Command{
 	Use:   "read",
 	Short: "Read .sunenv.yaml file.",
@@ -81,6 +93,14 @@ var initCmd = &cobra.Command{
 		}
 		Init(config, help, y, nohosting)
 	},
+}
+
+var frameworkInitCmd = &cobra.Command{
+	Use: "framework",
+	Short: "Initialize frameworks config files.",
+	Run: func(cmd *cobra.Command, args []string) {
+		Ask()
+	}
 }
 
 var statsCmd = &cobra.Command{

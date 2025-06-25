@@ -6,14 +6,16 @@ ICON_DIR = /usr/share/icons/
 DESKTOP_DIR = /usr/share/applications/
 DETECT_CMD = stats
 INIT_Y =  init --y
+BUILD_VERSION = 0.1
 
-.PHONY: all build install uninstall clean run doc install-doc uninstall-doc install-desktop uninstall-desktop
+.PHONY: all build install uninstall clean run doc install-doc uninstall-doc install-desktop uninstall-desktop install-assets uninstall-assets
 
 all: build 
 
 build:
 	@echo "Build…"
-	@go build .
+	@echo "Mode: local"
+	@go build -ldflags "-X 'main.LocalInstall=true' -X 'main.SysInstall=false' -X 'main.PortableInstall=false' -X 'main.Version=$(BUILD_VERSION)'" .
 	@echo "Done."
 install: install-doc install-desktop install-assets
 	@echo "Copying…"
